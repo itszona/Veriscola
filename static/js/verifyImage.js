@@ -124,33 +124,38 @@ const loadRecognizedFaces = async () => {
     // Function to convert SVG to PDF and print it
 };
 
-document.querySelector('.is-link').addEventListener('click', function(){
-    const svgElement = document.getElementById('barcode');
-    const barcode = new XMLSerializer().serializeToString(svgElement);
+/* Use any of the two methods. */
+
+// document.querySelector('.button.is-link.is-large').addEventListener('click', () => {
+//     const svgElement = document.getElementById('barcode')
+//     const barcode = new XMLSerializer().serializeToString(svgElement)
     
-    const blob = new Blob([barcode], {type: 'image/svg+xml'})
+//     const blob = new Blob([barcode], {type: 'image/svg+xml'})
 
-    const url = URL.createObjectURL(blob)
+//     const url = URL.createObjectURL(blob)
 
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'barcode.pdf'
+//     const a = document.createElement('a')
+//     a.href = url
+//     a.download = 'barcode.pdf'
 
-    a.click()
+//     a.click()
 
-    URL.revokeObjectURL(url)
+//     URL.revokeObjectURL(url)
+// })
+
+
+document.querySelector('.button.is-link.is-large').addEventListener('click', async () => {
+    barcodeContainer = await document.querySelector('#svgDiv')
+    
+    await html2canvas(barcodeContainer, { useCORS: true })
+    .then((canvas) => {
+        const pdf = new jsPDF()
+        const imgData = canvas.toDataURL('image/png')
+
+        pdf.addImage(imgData, 'PNG', 0, 0)
+        pdf.save('barcode.pdf')
+    }).catch((err) => console.log(err))
 })
-
-
-//async function generateAndPrintPDF() {
-  //  barcode = await document.getElementById().parentElement;
-    
-    // Use html2canvas to convert the barcode SVG to a canvas
-//    await html2canvas(barcode, {useCORS: true}).then((canvas) => {});
-//}
-
-// Attach the function to the 'Generate PDF' button
-//document.getElementById('generatePdf').addEventListener('click', generateAndPrintPDF);
 
 
 
