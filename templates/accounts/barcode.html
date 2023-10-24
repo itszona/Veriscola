@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Barcode to PDF</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div id="barcode-container"></div>
+    <button id="generate-pdf">Generate PDF</button>
+
+    <script src="{% static "js/verifyImage.js" %}"></script>
+    <script>
+        const code = document.getElementById("#barcode"); // Replace with your barcode value
+
+        const generatePDF = () => {
+            const doc = new jsPDF();
+            const svgElement = document.querySelector("#barcode-container svg");
+
+            if (svgElement) {
+                const svgString = new XMLSerializer().serializeToString(svgElement);
+                doc.text("Barcode:", 10, 10);
+                doc.addSVG(svgString, 10, 15, 50, 20);
+                doc.save("barcode.pdf");
+            } else {
+                alert("Barcode not found. Please generate it first.");
+            }
+        };
+
+        document.querySelector("#generate-pdf").addEventListener("click", generatePDF);
+    </script>
+</body>
+</html>

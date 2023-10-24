@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <title>Student List</title>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Student List</h1>
+
+            <table class="table is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>S/N</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Level</th>
+                        <th>Courses</th>
+                        <th>...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in object_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ student.registration_no }}</td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.department }}</td>
+                        <td>{{ student.level }}</td>
+                        <td>{{ student.courses.count }}</td>
+                        <td><a href="{% url "student-verify" student.pk %}">Verfiy</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>
+</html>

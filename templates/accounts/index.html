@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="{% static "css/webcam.css" %}">
+    <title>Webcam Image Capture</title>
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Webcam Image Capture</h1>
+        <div class="camera">
+            <video id="preview-video" autoplay playsinline></video>
+            <img id="capture-img" src="https://picsum.photos/500" style="display: none;"/>            
+        </div>
+        <button id="capture" class="button is-primary">Capture</button>
+        <button class="button is-link" onclick="resetForCapture()">Reset</button>
+        <hr>
+        <form action="POST" id="student-reg-form">
+            {% csrf_token %}
+            <label for="name">Student Name</label>
+            <input class="input is-info" type="text" id="student-name" maxlength="250" required>
+            <br>
+            <label for="registration-no">Registration Number</label>
+            <input class="input is-info" type="text" id="registration-no" maxlength="20" required>
+            <br>
+            <label for="department">Department</label>
+            <input class="input is-info" type="text" id="department" maxlength="50" required>
+            <hr>
+            <label for="student-level"><h3>Student Level</h3></label>
+            <div class="select is-medium">
+                <select name="student-level" id="student-level" required>
+                    {% for level in all_student_levels %}
+                    <option value="{{ level }}">{{ level }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <hr>
+            <legend><h3>Select Course</h3></legend>
+            <ul>
+                {% for course in all_courses %}
+                
+                <label class="checkbox">
+                    <input type="checkbox" value="{{ course.pk }}" class="student-course">
+                    {{ course.code }} | {{ course.name }}
+                </label>
+                <br>
+                {% endfor %}
+            </ul>
+            <hr>
+            <button class="button is-link is-large">Save Student</button>
+        </form>
+        <div id="form-errors"></div>
+    </div>
+    <script src="{% static "js/captureImage.js" %}"></script>
+</body>
+</html>

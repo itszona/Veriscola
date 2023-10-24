@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "bwip-js": "^4.1.1",
+    "jspdf": "^2.5.1",
+    "pdfkit": "^0.13.0"
+  },
+  "devDependencies": {
+    "@types/pdfkit": "^0.13.1"
+  }
+}
